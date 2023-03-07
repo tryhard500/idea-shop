@@ -70,7 +70,11 @@ function renderItemsInCard(sidebarListItems){
         `;
         price += Number(sidebarListItems[i].price);
     }
-    sidebarTotal.innerHTML = price;
+    if (price == 0) {
+        sidebarTotal.innerHTML = '';
+    } else {
+        sidebarTotal.innerHTML = price;
+    }
 }
 
 //Функции
