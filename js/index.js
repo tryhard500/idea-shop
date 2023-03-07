@@ -45,13 +45,13 @@ function addToCart(){
         cards[i].addEventListener('click',()=>{
         if (!cards[i].classList.contains('card-active')) {
             cards[i].classList.add('card-active');
-            if (!sidebarListItems.includes(i)) {
-                sidebarListItems.push(i);
-            }
+            sidebarListItems.push(products[i]);
         } else {
             cards[i].classList.remove('card-active');
-            if (sidebarListItems.includes(i)) {
-                sidebarListItems.pop(i);
+            for (let j = 0; j < sidebarListItems.length; j++){
+                if (sidebarListItems[j] === products[i]) {
+                    sidebarListItems.splice(j,1);
+                }
             }
         }
         renderItemsInCard(sidebarListItems);
@@ -63,16 +63,14 @@ function renderItemsInCard(sidebarListItems){
     let sidebarList = document.querySelector(`.sidebar-list`);
     let sidebarTotal = document.querySelector(`.sidebar-total`);
     let price = 0;
-    for (let i = 0; i < sidebarListItems; i++){
-        id = sidebarListItems[i];
+    sidebarList.innerHTML = '';
+    for (let i = 0; i < sidebarListItems.length; i++){
         sidebarList.innerHTML += `
-            <li>${products[id].title} - ${products[id].price}<li>
+            <li>${sidebarListItems[i].title} - ${sidebarListItems[i].price}</li>
         `;
-        price += Number(products[sidebarListItems[i]].price);
+        price += Number(sidebarListItems[i].price);
     }
-    if (price != 0) {
-        sidebarTotal.innerHTML = price;
-    }
+    sidebarTotal.innerHTML = price;
 }
 
 //Функции
